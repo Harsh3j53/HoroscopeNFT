@@ -1,0 +1,2 @@
+# HoroscopeNFT
+ MY FIRST DAPP
