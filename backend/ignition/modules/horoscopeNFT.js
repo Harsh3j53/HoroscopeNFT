@@ -1,19 +1,11 @@
-const { ethers } = require("ethers");
 const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
-const { PRIVATE_KEY } = process.env;
 
-module.exports = buildModule("horoscopeNFT", async (m) => {
+module.exports = buildModule("horoscopeNFT", (m) => {
   const horoscopeNFT = m.contract("horoscopeNFT");
-  const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.g.alchemy.com/v2/d13gG0RvRZ8mHqYMnnSEyBpkRuvUiHHt"); // Replace with your provider URL
-  const wallet = new ethers.Wallet(`0x${PRIVATE_KEY}`, provider); // Replace with your wallet private key
-  const signer = wallet.connect(provider);
+  const recipient = "0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f";
+  const zodiacSign = "leo";
 
-  // Deploy the contract
-  const deployTx = await horoscopeNFT.deploy().connect(signer);
-  await deployTx.wait();
+  m.call(horoscopeNFT, "mintNFT", [recipient, zodiacSign]);
 
-  // Get the transaction hash
-  console.log("Transaction hash:", deployTx.hash);
-
-  return { horoscopeNFT: deployTx.contract };
+  return { horoscopeNFT };
 });
